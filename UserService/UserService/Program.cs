@@ -1,8 +1,12 @@
+using Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+await builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
@@ -17,5 +21,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.Run();
+ 
+await app.RunAsync();
