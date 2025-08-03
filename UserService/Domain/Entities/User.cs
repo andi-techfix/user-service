@@ -6,7 +6,7 @@ public class User
     public string Name { get; private set; } = null!;
     public string Email { get; private set; } = null!;
     public int SubscriptionId { get; private set; }
-    public Subscription? Subscription { get; private set; } = null!;
+    public Subscription Subscription { get; private set; } = null!;
 
     // EF ctor
     private User() { }
@@ -26,6 +26,6 @@ public class User
     
     public void ChangeName(string newName)
     {
-        Email = newName;
+        Name = newName;
     }
 }

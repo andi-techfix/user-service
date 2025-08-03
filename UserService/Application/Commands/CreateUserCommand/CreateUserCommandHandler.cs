@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Commands.CreateUserCommand;
 
-public class CreateUserCommandHandler(IUserRepository repo) : IRequestHandler<CreateUserCommand, int>
+public class CreateUserCommandHandler(IUserRepository userRepository) : IRequestHandler<CreateUserCommand, int>
 {
     public async Task<int> Handle(CreateUserCommand cmd, CancellationToken cancellationToken)
     {
@@ -14,8 +14,8 @@ public class CreateUserCommandHandler(IUserRepository repo) : IRequestHandler<Cr
             cmd.Email,
             subscription
         );
-        await repo.AddAsync(user);
-        await repo.SaveChangesAsync();
+        await userRepository.AddAsync(user);
+        await userRepository.SaveChangesAsync();
         return user.Id;
     }
 }

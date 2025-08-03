@@ -31,10 +31,9 @@ public class UsersController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(Get), new { id }, null);
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateUserCommand cmd)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateUserCommand cmd)
     {
-        if (id != cmd.Id) return BadRequest();
         await mediator.Send(cmd);
         return NoContent();
     }

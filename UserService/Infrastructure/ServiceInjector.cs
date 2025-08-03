@@ -15,6 +15,15 @@ public static class ServiceInjector
             .GetSection(DbConfiguration.SectionName).Get<DbConfiguration>();
         DbConfiguration.ThrowIfInvalid(dbConfiguration);
 
+        services.AddDbContext<ApplicationDbContext>(builder =>
+        {
+            builder.UseNpgsql(DbConfiguration.GetConnectionString(dbConfiguration!), o =>
+            {
+                o.EnableRetryOnFailure(dbConfiguration!.MaxRetryCount,
+                    TimeSpan.FromSeconds(dbConfiguration.MaxRetryTime), null);
+            });
+        });
+
         services.AddScoped<IUserRepository, UserRepository>();
         await RunDbMigrations(services);
     }

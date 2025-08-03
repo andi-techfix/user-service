@@ -8,11 +8,18 @@ public class UserMap : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> b)
     {
-        b.ToTable("users");
+        b.ToTable("Users");
+        
         b.HasKey(x => x.Id);
+        b.Property(x => x.Id)
+            .HasColumnName("Id")                     
+            .ValueGeneratedOnAdd()                  
+            .UseIdentityByDefaultColumn();          
+
         b.Property(x => x.Name)
             .HasMaxLength(100)
             .IsRequired();
+
         b.Property(x => x.Email)
             .HasMaxLength(200)
             .IsRequired();
