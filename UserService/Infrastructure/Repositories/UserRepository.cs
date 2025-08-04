@@ -19,9 +19,9 @@ public class UserRepository(ApplicationDbContext db) : IUserRepository
     public async Task<IEnumerable<User>> GetBySubscriptionTypeAsync(string subscriptionType) =>
         await db.Users
             .Include(u => u.Subscription)
-            .Where(u => u.Subscription != null && u.Subscription.Type.ToString() == subscriptionType)
+            .Where(u => u.Subscription.Type.ToString() == subscriptionType)
             .ToListAsync();
-
+    
     public async Task AddAsync(User user)
     {
         await db.Users.AddAsync(user);

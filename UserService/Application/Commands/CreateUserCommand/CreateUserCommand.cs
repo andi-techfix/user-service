@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
+using FluentResults;
 using MediatR;
 
 namespace Application.Commands.CreateUserCommand;
@@ -10,4 +11,4 @@ public record CreateUserCommand(
     SubscriptionType SubscriptionType,
     DateTime SubscriptionStart,
     DateTime SubscriptionEnd
-) : IRequest<int>;
+) : IRequest<Result<int>>;

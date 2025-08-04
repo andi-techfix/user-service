@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,6 +22,10 @@ public class UserMap : IEntityTypeConfiguration<User>
             .IsRequired();
 
         b.Property(x => x.Email)
+            .HasConversion(
+                email => email.Value,
+                value => Email.Create(value).Value
+            )
             .HasMaxLength(200)
             .IsRequired();
 

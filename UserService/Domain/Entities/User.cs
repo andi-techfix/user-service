@@ -1,17 +1,19 @@
-﻿namespace Domain.Entities;
+﻿using Domain.ValueObjects;
+
+namespace Domain.Entities;
 
 public class User
 {
     public int Id { get; private set; }
     public string Name { get; private set; } = null!;
-    public string Email { get; private set; } = null!;
+    public Email Email { get; private set; } = null!;
     public int SubscriptionId { get; private set; }
     public Subscription Subscription { get; private set; } = null!;
 
     // EF ctor
     private User() { }
 
-    public User(string name, string email, Subscription subscription)
+    public User(string name, Email email, Subscription subscription)
     {
         Name = name;
         Email = email;
@@ -19,7 +21,7 @@ public class User
         SubscriptionId = subscription.Id;
     }
 
-    public void ChangeEmail(string newEmail)
+    public void ChangeEmail(Email newEmail)
     {
         Email = newEmail;
     }

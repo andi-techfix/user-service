@@ -4,6 +4,9 @@ using Application.Commands.UpdateUserCommand;
 using Application.Dtos;
 using Application.Queries.GetAllUsersQuery;
 using Application.Queries.GetUserByIdQuery;
+using Application.Queries.GetUsersBySubscriptionQuery;
+using Domain.Entities;
+using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,11 +27,22 @@ public class UsersController(IMediator mediator) : ControllerBase
         return dto is null ? NotFound() : Ok(dto);
     }
 
+    [HttpGet("bySubscription/{subscriptionType}")]
+    public async Task<ActionResult<IEnumerable<User>>> GetUsersBySubscriptionType(string subscriptionType)
+    {
+        var users = await mediator.Send(new GetUsersBySubscriptionTypeQuery(subscriptionType));
+        return Ok(users);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand cmd)
     {
-        var id = await mediator.Send(cmd);
-        return CreatedAtAction(nameof(Get), new { id }, null);
+        var creationIdResult = await mediator.Send(cmd);
+        if(creationIdResult.IsFailed)
+        {
+            return BadRequest(creationIdResult.Errors);
+        }
+        return Ok(creationIdResult.Value);
     }
 
     [HttpPut]
