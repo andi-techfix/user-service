@@ -1,0 +1,9 @@
+$env:DOTNET_ENVIRONMENT="Development"
+$env:Database__Host="localhost"
+$env:Database__ReadHost="localhost"
+$env:Database__Port=5430
+$env:Database__Name="userservicedb"
+$env:Database__User="postgres"
+$env:Database__Password="postgres"
+$env:Database__MaxRetryCount=5
+$env:Database__MaxRetryTime=3
