@@ -28,10 +28,10 @@ public class UsersController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("bySubscription/{subscriptionType}")]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsersBySubscriptionType(string subscriptionType)
+    public async Task<ActionResult<List<int>>> GetIdsBySubscription(string subscriptionType)
     {
         var users = await mediator.Send(new GetUsersBySubscriptionTypeQuery(subscriptionType));
-        return Ok(users);
+        return users.Select(u => u.Id).ToList();
     }
 
     [HttpPost]
